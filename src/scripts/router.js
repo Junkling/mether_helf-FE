@@ -3,7 +3,8 @@ import Items from "@/pages/Items";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import Account from "@/pages/Account";
-import Admin from "@/pages/Admin"
+import Admin from "@/pages/Admin";
+import Cart from "@/pages/Cart"
 
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -14,6 +15,7 @@ const routes = [
     {path:'/account',component: Account},
     {path:'/admin',component: Admin},
     {path:'/items',component: Items},
+    {path:'/cart',component: Cart}
 ]
 const router = createRouter({
     history: createWebHistory(),
