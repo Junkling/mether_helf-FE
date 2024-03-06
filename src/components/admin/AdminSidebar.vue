@@ -7,24 +7,28 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
+        </li>
+
+
+      <li class="nav-item">
+        <a href="#" class="nav-link link-dark" aria-current="page">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
           유저 관리
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="#" class="nav-link link-dark">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
           상품 관리
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="#" class="nav-link link-dark">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
           카테고리 관리
         </a>
       </li>
-      <li>
+      <li class="nav-item">
         <a href="#" class="nav-link link-dark">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
           대시보드
@@ -111,5 +115,9 @@ export default {
 
 .title:not(.is-spaced) + .subtitle {
   margin-top: 1rem;
+}
+
+.nav-item {
+  margin-bottom: 50px; /* 원하시는 간격으로 조절해주세요 */
 }
 </style>

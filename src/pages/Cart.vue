@@ -1,21 +1,26 @@
 <template>
+  <div class="col-lg-6 col-md-8 mx-auto">
+    <p></p>
+  </div>
   <div class="container my-4">
     <h2 class="fw-bold">장바구니</h2>
-    <div class="d-flex align-items-center mb-3">
-      <div class="form-check">
-        <input disabled type="checkbox" class="form-check-input" />
-        <div class="form-check-label">전체선택 (0/0)</div>
-        <span class="ms-auto">선택삭제</span>
-      </div>
-    </div>
+
     <div></div>
     <div class="row mt-4">
+      <AccountSidebar />
       <div class="col-11">
         <div>
           <p class="text-center">장바구니에 담긴 상품이 없습니다</p>
         </div>
       </div>
       <div class="col-12">
+        <div class="d-flex align-items-center mb-3">
+          <div class="form-check">
+            <input disabled type="checkbox" class="form-check-input" />
+            <div class="form-check-label">전체선택 (0/0)</div>
+            <span class="ms-auto">선택삭제</span>
+          </div>
+        </div>
         <div class="d-flex justify-content-between mb-3">
           <div>상품금액</div>
           <div>0원</div>
@@ -38,9 +43,7 @@
     <div class="col-12 mt-4">
       <ul class="mt-2">
         <li>[주문완료] 상태일 경우에만 주문 취소 가능합니다.</li>
-        <li>
-          [마이컬리 &gt; 주문내역 상세페이지] 에서 직접 취소하실 수 있습니다.
-        </li>
+        <li>[주문내역 상세페이지] 에서 직접 취소하실 수 있습니다.</li>
       </ul>
     </div>
   </div>
@@ -48,10 +51,13 @@
 <script>
 import { reactive } from "vue";
 // import axios from 'axios';
+import AccountSidebar from "@/components/account/AccountSidebar";
 
 export default {
   name: "Cart",
-  components: {},
+  components: {
+    AccountSidebar,
+  },
   setup() {
     const state = reactive({});
     // axios.get(`/api/first_categories/${this.code}`).then((res) => {
@@ -102,18 +108,18 @@ h2 {
 }
 .row.mt-4 {
   display: flex;
-  align-items: center;
+  align-items: left;
 }
 
 .row.mt-4 > * {
   flex: 1;
 }
 .row.mt-4 > *:first-child {
-  flex-grow: 7;
+  flex-grow: 0.48;
 }
 
 .row.mt-4 > *:last-child {
-  flex-grow: 3;
+  flex-grow: 0.5;
 }
 
 .d-flex {
@@ -149,6 +155,5 @@ li {
 .fw-bold {
   font-weight: bold;
 }
-
 </style>
     

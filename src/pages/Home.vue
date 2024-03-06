@@ -1,5 +1,12 @@
 <template>
   <div class="home">
+    <div class="black-bg" v-if="modelStatus==true">
+    <div class="white-bg">
+      <h4> {{model.itemName}} </h4>
+      <p> {{ model.detail }} </p>
+      <button @click="modelStatus=false"> 닫기 </button>
+    </div>
+  </div>
     <section class="py-5 text-center container">
       <!-- <CategoryNavVue :firstCategory = "firstCategory"/> -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,12 +30,12 @@
                 v-for="(firstCategories, idx) in state.firstCategories"
                 :key="idx"
               >
-                <button
+                <a
                   class="nav-link"
                   @click="changeFirstCategory(firstCategories)"
                 >
                   {{ firstCategories.name }}
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -39,7 +46,6 @@
       <div class="d-flex">
         <div class="flex-shrink-0 p-3 bg-white" style="width: 280px">
           <a
-            href="/"
             class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom"
           >
             <svg class="bi me-2" width="30" height="24">
@@ -53,9 +59,9 @@
               :key="idx"
               class="mb-1"
             >
-              <button class="nav-link" @click="findItems(secondCategories.id)">
+              <a class="nav-link link-dark" @click="findItems(secondCategories.id)">
                 {{ secondCategories.name }}
-              </button>
+              </a>
             </li>
           </ul>
         </div>
@@ -83,6 +89,7 @@ export default {
   setup() {
     const state = reactive({
       form: {
+        modelStatus: false,
         items: [],
         firstCategoies: [],
         firstCategoryName: "",

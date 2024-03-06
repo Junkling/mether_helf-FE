@@ -1,17 +1,17 @@
 <template>    
     <body>
         <div class="form-sign-up w-100 m-auto">
-		<h2>Sign Up</h2>
+		<h2>회원 가입</h2>
 		<p>생성할 계정 정보를 입력해주세요</p>
 		<hr>
         <div class="form-group">
             <input type="username" class="form-control" id="floatingInput" placeholder="로그인 ID *" @keyup.enter="submit()" v-model="state.form.username">
         </div>
 		<div class="form-group">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password *" @keyup.enter="submit()" v-model="state.form.password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호 *" @keyup.enter="submit()" v-model="state.form.password">
         </div>
 		<div class="form-group">
-            <input type="password" class="form-control" id="floatingConfirmPassword" name="confirm_password" placeholder="Confirm Password *" @keyup.enter="submit()" v-model="state.form.confirmPassword">
+            <input type="password" class="form-control" id="floatingConfirmPassword" name="confirm_password" placeholder="비밀번호 확인 *" @keyup.enter="submit()" v-model="state.form.confirmPassword">
         </div>        
         <div class="form-group">
             <input type="nickname" class="form-control" id="floatingInput" placeholder="닉네임 *" @keyup.enter="submit()" v-model="state.form.nickname">
