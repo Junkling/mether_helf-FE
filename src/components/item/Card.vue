@@ -17,23 +17,17 @@
     </div>
 </template>
 <script>
-// import lib from "@/scripts/lib"
-// import axios from 'axios';
+import lib from "@/scripts/lib"
 
 export default {
   name: 'Card',
-//   props:{
-//     item: Object
-//   },
-//   setup(){
-//     const addTOCart = (itemId)=>{
-//       axios.post(`/api/cart/items/${itemId}`).then((res)=>{
-//         console.log(res.data)
-//       }
-//       )
-//     };
-//     return{lib, addTOCart}
-//   }
+  props:{
+    item: Object
+  },
+  setup(){
+    
+    return{lib}
+  }
 }
 </script>
 

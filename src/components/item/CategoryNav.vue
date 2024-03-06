@@ -40,4 +40,21 @@ export default {
     
     <!-- Add "scoped" attribute to limit CSS to this component only -->
     <style scoped>
+.navbar-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.nav-link {
+  display: inline-block;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+
 </style>
