@@ -1,16 +1,25 @@
 <template>
   <div class="black-bg" v-if="state.modelStatus == true">
     <div class="white-bg">
-      <h4>{{ state.model.name }}</h4>
-      <p>
-        {{
-          lib.getNumberFormatted(
-            state.model.price -
-              Math.ceil((state.model.price * state.model.discountPer) / 100)
-          )
-        }}
-      </p>
-      <button @click="state.modelStatus = false">닫기</button>
+      <div class="container">
+        <h4>{{ state.model.name }}</h4>
+        <div>원가</div>
+        <small class="price text-muted"
+          >{{ lib.getNumberFormatted(Math.ceil(state.model.price)) }}원</small
+        >
+        <br />
+        <div>할인가</div>
+        <small class="real text-danger">
+          {{
+            lib.getNumberFormatted(
+              state.model.price -
+                Math.ceil((state.model.price * state.model.discountPer) / 100)
+            )
+          }}
+          원
+        </small>
+        <button class="btn btn-secondary btn-lg btn-block" @click="state.modelStatus = false">닫기</button>
+      </div>
     </div>
   </div>
   <div class="home">
@@ -79,7 +88,12 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div class="col" v-for="(item, idx) in state.items" :key="idx">
             <Card :item="item" />
-            <button class="btn btn-secondary btn-lg btn-block" @click="setModel(item.id)">상세보기</button>
+            <button
+              class="btn btn-secondary btn-lg btn-block"
+              @click="setModel(item.id)"
+            >
+              상세보기
+            </button>
           </div>
         </div>
       </div>
@@ -123,7 +137,7 @@ export default {
         .then(({ data }) => {
           state.secondCategories = data;
         });
-        state.items = [];
+      state.items = [];
     };
 
     const findItems = (id) => {

@@ -4,42 +4,46 @@
       <header class="header text-center">
         <h1>상품 목록</h1>
       </header>
+      <div class="button-right">
+        <button
+          class="btn btn-primary"
+          onclick="location.href = '/admin/items/add'"
+        >
+          <a class="nav-link link-dark"> 생성 </a>
+        </button>
+      </div>
     </section>
+
     <div class="container my-4">
-      
       <div class="row mt-4">
         <AdminSidebar />
         <div class="table-container mt-4 p-3">
           <form>
-        <div class="d-flex">
-          <div class="input-group">
-            <input
-              class="form-control"
-              name="title"
-              placeholder="상품명 검색"
-            />
-            <button class="btn btn-primary lh-1 p-0 px-2">
-              <span class="material-symbols-outlined"> search </span>
-            </button>
-          </div>
+            <div class="d-flex">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  name="itemName"
+                  placeholder="상품명 검색"
+                />
+                <button class="btn btn-primary lh-1 p-0 px-2">
+                  <span class="material-symbols-outlined"> search </span>
+                </button>
+              </div>
 
-          <div class="input-group">
-            <input
-              class="form-control"
-              name="title"
-              placeholder="중 카테고리로 검색"
-            />
-            <button class="btn btn-primary lh-1 p-0 px-2">
-              <span class="material-symbols-outlined"> search </span>
-            </button>
-          </div>
-          <div class="input-group">
-            <button class="btn btn-primary">
-              <span class="material-symbols-outlined"> 생성 </span>
-            </button>
-          </div>
-        </div>
-      </form>
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  name="secondCategoryId"
+                  placeholder="중 카테고리로 검색"
+                />
+                <button class="btn btn-primary lh-1 p-0 px-2">
+                  <span class="material-symbols-outlined"> search </span>
+                </button>
+              </div>
+            </div>
+          </form>
+
           <table class="table table-striped table-hover">
             <thead class="thead-dark">
               <tr>
@@ -102,8 +106,11 @@ export default {
     const showDetail = (id) => {
       router.push({ path: `/admin/item/${id}` });
     };
+    const toCreate = () => {
+      router.push({ path: `/admin/item/add` });
+    };
     load();
-    return { state, showDetail };
+    return { state, showDetail, toCreate };
   },
 };
 </script>
@@ -117,7 +124,9 @@ export default {
 .table {
   margin-bottom: 0; /* 카드의 바닥에 있는 여백 제거 */
 }
-
+.button-right {
+  float: right;
+}
 .row.mt-4 {
   display: flex;
   align-items: left;

@@ -8,6 +8,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { RouterView } from "vue-router";
+
 // import store from "@/scripts/store";
 // import axios from 'axios';
 // import { useRoute } from 'vue-router';
@@ -20,7 +21,8 @@ export default {
     Footer,
     RouterView,
   },
-  setup() {},
+  setup() {
+  }
 };
 </script>
 

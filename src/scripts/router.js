@@ -8,6 +8,7 @@ import AdminItem from "@/pages/admin/AdminItem";
 import AdminFirstCategory from "@/pages/admin/AdminFirstCategory";
 import AdminSecondCategory from "@/pages/admin/AdminSecondCategory";
 import ItemDetail from "@/pages/admin/ItemDetail";
+import CreateItem from "@/pages/admin/CreateItem";
 import Admin from "@/pages/admin/Admin";
 import Cart from "@/pages/user/Cart";
 import MyInfo from "@/pages/user/MyInfo";
@@ -29,7 +30,8 @@ const routes = [
     {path:'/items',component: Items},
     {path:'/cart',component: Cart},
     {path:'/my',component: MyInfo},
-    {path: '/admin/item/:itemId', component: ItemDetail, props: true },
+    {path:'/admin/item/:itemId', component: ItemDetail, props: true },
+    {path:'/admin/items/add', component: CreateItem}
 ]
 const router = createRouter({
     history: createWebHistory(),

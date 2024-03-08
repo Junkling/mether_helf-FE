@@ -32,7 +32,7 @@ export default {
             }
         })
         const submit = () =>{
-            axios.post("api/user/login", state.form).then((res)=>{
+            axios.post("api/users/login", state.form).then((res)=>{
                 console.log(res.data);
                 router.push({path: '/'})
                 window.alert("로그인 되었습니다.");
