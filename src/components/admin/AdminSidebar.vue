@@ -11,27 +11,27 @@
 
 
       <li class="nav-item">
-        <a href="#" class="nav-link link-dark" aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+        <a href="/admin/users" class="nav-link link-dark" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/user"></use></svg>
           유저 관리
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+        <a href="/admin/items" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/item"></use></svg>
           상품 관리
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          카테고리 관리
+        <a href="/admin/first_categories" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/first_categories"></use></svg>
+          대 카테고리 관리
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          대시보드
+        <a href="/admin/second_categories" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/second_categories"></use></svg>
+          중 카테고리
         </a>
       </li>
     </ul>
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+// import router from "@/scripts/router";
+
 export default {
   name: "AdminSidebar",
   setup() {},

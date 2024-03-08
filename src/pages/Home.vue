@@ -1,12 +1,28 @@
 <template>
-  <div class="home">
-    <div class="black-bg" v-if="modelStatus==true">
+  <div class="black-bg" v-if="state.modelStatus == true">
     <div class="white-bg">
-      <h4> {{model.itemName}} </h4>
-      <p> {{ model.detail }} </p>
-      <button @click="modelStatus=false"> 닫기 </button>
+      <div class="container">
+        <h4>{{ state.model.name }}</h4>
+        <div>원가</div>
+        <small class="price text-muted"
+          >{{ lib.getNumberFormatted(Math.ceil(state.model.price)) }}원</small
+        >
+        <br />
+        <div>할인가</div>
+        <small class="real text-danger">
+          {{
+            lib.getNumberFormatted(
+              state.model.price -
+                Math.ceil((state.model.price * state.model.discountPer) / 100)
+            )
+          }}
+          원
+        </small>
+        <button class="btn btn-secondary btn-lg btn-block" @click="state.modelStatus = false">닫기</button>
+      </div>
     </div>
   </div>
+  <div class="home">
     <section class="py-5 text-center container">
       <!-- <CategoryNavVue :firstCategory = "firstCategory"/> -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -59,7 +75,10 @@
               :key="idx"
               class="mb-1"
             >
-              <a class="nav-link link-dark" @click="findItems(secondCategories.id)">
+              <a
+                class="nav-link link-dark"
+                @click="findItems(secondCategories.id)"
+              >
                 {{ secondCategories.name }}
               </a>
             </li>
@@ -69,6 +88,12 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div class="col" v-for="(item, idx) in state.items" :key="idx">
             <Card :item="item" />
+            <button
+              class="btn btn-secondary btn-lg btn-block"
+              @click="setModel(item.id)"
+            >
+              상세보기
+            </button>
           </div>
         </div>
       </div>
@@ -80,6 +105,7 @@
 import { reactive } from "vue";
 import axios from "axios";
 import Card from "@/components/item/Card";
+import lib from "@/scripts/lib";
 
 export default {
   name: "Home",
@@ -90,6 +116,7 @@ export default {
     const state = reactive({
       form: {
         modelStatus: false,
+        model: {},
         items: [],
         firstCategoies: [],
         firstCategoryName: "",
@@ -101,6 +128,7 @@ export default {
         state.firstCategories = data;
         changeFirstCategory(data[0]);
       });
+      state.model = {};
     };
     const changeFirstCategory = (category) => {
       state.firstCategoryName = category.name;
@@ -109,6 +137,7 @@ export default {
         .then(({ data }) => {
           state.secondCategories = data;
         });
+      state.items = [];
     };
 
     const findItems = (id) => {
@@ -116,15 +145,14 @@ export default {
         state.items = data;
       });
     };
-
-    // axios.get(`/api/second_categories/${this.categoryId}`).then((res) => {
-    //   state.secondCategory = res.data;
-    // })
-    // axios.get("/api/items/list/1").then((res) => {
-    //     state.items = res.data;
-    // })
+    const setModel = (id) => {
+      axios.get(`/api/items/${id}`).then(({ data }) => {
+        state.model = data;
+      });
+      state.modelStatus = true;
+    };
     load();
-    return { state, changeFirstCategory, findItems };
+    return { state, changeFirstCategory, findItems, setModel, lib };
   },
 };
 </script>
@@ -167,6 +195,21 @@ export default {
 }
 .mb-1 {
   text-align: left;
+}
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+  z-index: 9999;
+  box-sizing: border-box;
+}
+.white-bg {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
 }
 /* .album {
   display: flex;

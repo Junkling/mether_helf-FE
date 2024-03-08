@@ -7,8 +7,8 @@
           <span class="discount badge bg-danger">{{item.discountPer}}%</span>
         </p>
         <div class="d-flex justify-content-between align-items-center">
-            <button class="btn btn-primary" @click="addTOCart(item.id)">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <button class="btn btn-light">
+              <i class="fa fa-genderless" aria-hidden="true"></i>
             </button>
           <small class="price text-muted">{{lib.getNumberFormatted(item.price)}}원</small>
           <small class="real text-danger">{{lib.getNumberFormatted(item.price-Math.ceil((item.price * item.discountPer/100)))}}원</small>
