@@ -11,8 +11,12 @@
               </li>
               <!-- <li v-if="$store.state.account.id"> -->
               <li>
-                <router-link to="/orders" class="text-white">
+                <router-link to="/account" class="text-white">
                   마이 페이지</router-link>
+              </li>
+              <li>
+                <router-link to="/admin" class="text-white">
+                  관리자 페이지</router-link>
               </li>
 
               <!-- <li v-if="$store.state.account.role==='seller'">
@@ -47,6 +51,9 @@
         <!-- <router-link to="/cart" class="cart btn" v-if="$store.state.account.id">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
           </router-link> -->
+           <router-link to="/cart" class="cart btn">
+            <i class="fa fa-shopping-cart"></i>
+          </router-link>
         <button
           class="navbar-toggler"
           type="button"

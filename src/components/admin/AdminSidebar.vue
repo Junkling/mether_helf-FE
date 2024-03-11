@@ -11,40 +11,19 @@
 
 
       <li class="nav-item">
-        <a href="/admin/users" class="nav-link link-dark" aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/user"></use></svg>
-          유저 관리
-        </a>
+        <router-link to="/admin/users" class="text-black"> 유저 관리 </router-link>
       </li>
       <li class="nav-item">
-        <a href="/admin/items" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/item"></use></svg>
-          상품 관리
-        </a>
+        <router-link to="/admin/items" class="text-black"> 상품 관리 </router-link>
       </li>
       <li class="nav-item">
-        <a href="/admin/first_categories" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/first_categories"></use></svg>
-          대 카테고리 관리
-        </a>
+        <router-link to="/admin/first_categories" class="text-black"> 대 카테고리 관리 </router-link>
       </li>
       <li class="nav-item">
-        <a href="/admin/second_categories" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#admin/second_categories"></use></svg>
-          중 카테고리
-        </a>
+        <router-link to="/admin/second_categories" class="text-black"> 중 카테고리 관리 </router-link>
       </li>
     </ul>
     <hr>
-    <div class="dropdown">
-      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-        <li><a class="dropdown-item" href="#">New project...</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
-      </ul>
-    </div>
   </div>
 </template>
 

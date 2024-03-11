@@ -110,9 +110,9 @@ export default {
       axios.post("/api/items", state.form).then((res) => {
         // alert("생성 완료되었습니다.");
         console.log(res.data);
-        router.push({path:'/admin/items'});
         window.alert("생성되었습니다.");
       });
+      router.push({path:'/admin/items'});
     };
     return { state, create };
   },

@@ -1,38 +1,43 @@
 <template>
-  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+  <div
+    class="d-flex flex-column flex-shrink-0 p-3 bg-light"
+    style="width: 280px"
+  >
+    <a
+      href="/"
+      class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+    >
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
       <span class="fs-4">마이페이지</span>
     </a>
-    <hr>
+    <hr />
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item"></li>
       <li class="nav-item">
-        <a href="#" class="nav-link link-dark" aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+        <router-link to="/my" class="text-black"> 내 정보</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/cart" class="text-black"> 장바구니</router-link>
+        <!-- <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
           장바구니
-        </a>
+        </a> -->
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          내 정보
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          문의하기
-        </a>
+        <router-link to="/orders" class="text-black"> 주문 목록</router-link>
       </li>
     </ul>
-    <hr>
+    <hr />
     <div class="dropdown">
-      <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+      <ul
+        class="dropdown-menu text-small shadow"
+        aria-labelledby="dropdownUser2"
+      >
         <li><a class="dropdown-item" href="#">New project...</a></li>
         <li><a class="dropdown-item" href="#">Settings</a></li>
         <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><hr class="dropdown-divider"></li>
+        <li><hr class="dropdown-divider" /></li>
         <li><a class="dropdown-item" href="#">Sign out</a></li>
       </ul>
     </div>
@@ -48,7 +53,7 @@ export default {
 
 <style scoped>
 .nav {
-  text-align : left
+  text-align: left;
 }
 .header-search-input {
   width: 20rem;

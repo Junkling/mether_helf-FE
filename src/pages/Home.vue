@@ -18,7 +18,29 @@
           }}
           원
         </small>
-        <button class="btn btn-secondary btn-lg btn-block" @click="state.modelStatus = false">닫기</button>
+        <hr />
+        <p class="card-text">
+          <span>{{ state.model.content }} &nbsp;</span>
+        </p>
+        <hr />
+        <div class="form-group">
+          <label for="cartCount" class="form-label">수량</label
+          ><input
+            type="text"
+            class="form-control"
+            id="cartCount"
+            v-model="state.form.cartCount"
+          />
+          <button class="btn btn-primary" @click="addToCart(state.model.id)">
+            장바구니 담기
+          </button>
+        </div>
+        <button
+          class="btn btn-secondary btn-lg btn-block"
+          @click="state.modelStatus = false"
+        >
+          닫기
+        </button>
       </div>
     </div>
   </div>
@@ -121,6 +143,7 @@ export default {
         firstCategoies: [],
         firstCategoryName: "",
         secondCategories: [],
+        cartCount: 0,
       },
     });
     const load = () => {
@@ -151,8 +174,21 @@ export default {
       });
       state.modelStatus = true;
     };
+    const addToCart = (itemId) => {
+      const dto = {
+        //여기 시큐리티 적용 후 삭제해야함 수정해야함
+        itemId: itemId,
+        count: state.form.cartCount
+      };
+      axios.post(`/api/carts`, dto).then(({ data }) => {
+        console.log(data);
+        state.modelStatus = false;
+        window.alert("장바구니에 담았습니다.");
+      });
+      state.modelStatus = true;
+    };
     load();
-    return { state, changeFirstCategory, findItems, setModel, lib };
+    return { state, changeFirstCategory, findItems, setModel, lib, addToCart };
   },
 };
 </script>

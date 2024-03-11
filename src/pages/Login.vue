@@ -22,6 +22,7 @@
 import { reactive } from 'vue'
 import axios from 'axios'
 import router from '@/scripts/router'
+import store from "@/scripts/store"
 
 export default {
     setup(){
@@ -33,7 +34,7 @@ export default {
         })
         const submit = () =>{
             axios.post("api/users/login", state.form).then((res)=>{
-                console.log(res.data);
+                store.commit('setToken', res.data);
                 router.push({path: '/'})
                 window.alert("로그인 되었습니다.");
             }).catch(()=>{

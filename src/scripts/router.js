@@ -12,6 +12,7 @@ import CreateItem from "@/pages/admin/CreateItem";
 import Admin from "@/pages/admin/Admin";
 import Cart from "@/pages/user/Cart";
 import MyInfo from "@/pages/user/MyInfo";
+import Orders from "@/pages/user/Orders";
 
 
 
@@ -29,6 +30,7 @@ const routes = [
     {path:'/admin',component: Admin},
     {path:'/items',component: Items},
     {path:'/cart',component: Cart},
+    {path:'/orders',component: Orders},
     {path:'/my',component: MyInfo},
     {path:'/admin/item/:itemId', component: ItemDetail, props: true },
     {path:'/admin/items/add', component: CreateItem}
