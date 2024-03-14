@@ -8,14 +8,18 @@
     <form>
       <div class="form-group">
         <label for="secondCategoryId" class="form-label"
-          >중 카테고리 아이디</label
+          >중 카테고리</label
         >
-        <input
-          type="text"
-          class="form-control"
-          id="secondCategoryId"
-          v-model="state.form.secondCategoryId"
-        />
+        <select v-model="state.form.secondCategoryId" class="form-select">
+          <option
+            v-for="(item, index) in state.secondCategoryList"
+            :key="index"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+        <!-- <FormSelect :id= "state.form.secondCategoryId" :list="state.secondCategoryList"/> -->
       </div>
 
       <div>
@@ -77,7 +81,7 @@
           <div class="col">
             <button
               class="w-100 btn btn-secondary btn-lg"
-              onclick="location.href = '/admin/items'"
+              onclick="location.href = '/murthehelp/admin/items'"
               type="button"
             >
               취소
@@ -92,9 +96,13 @@
 import { reactive } from "vue";
 import axios from "axios";
 import router from "@/scripts/router";
+// import FormSelect from "@/components/FormSelect";
 
 export default {
   name: "CreateItem",
+  components: {
+    // FormSelect,
+  },
   setup() {
     const state = reactive({
       form: {
@@ -105,14 +113,20 @@ export default {
         stock: 0,
         content: "",
       },
+      secondCategoryList:[],
     });
+    const load = () => {
+      axios.get(`/api/second-categories/list`).then((res) => {
+        state.secondCategoryList = res.data;
+      });
+    };
+    load();
     const create = () => {
-      axios.post("/api/items", state.form).then((res) => {
-        // alert("생성 완료되었습니다.");
+      axios.post("/api/admin/items", state.form).then((res) => {
         console.log(res.data);
         window.alert("생성되었습니다.");
       });
-      router.push({path:'/admin/items'});
+      router.push({ path: "/murthehelp/admin/items" });
     };
     return { state, create };
   },

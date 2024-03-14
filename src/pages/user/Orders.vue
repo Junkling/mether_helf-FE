@@ -1,4 +1,49 @@
 <template>
+  <div class="black-bg" v-if="state.modelStatus == true">
+    <div class="white-bg">
+      <h4>{{ state.model.title }}</h4>
+      <hr />
+      <span class="model-span"> 결제 계좌 </span>
+      <p>
+        {{ state.model.payment }}
+      </p>
+      <div>
+        <span class="model-span"> 배송지 </span>
+        <p>
+          {{ state.modelDelivery.address }}
+        </p>
+        <span class="model-span">배송 상태</span>
+        <p>
+          {{ state.modelDelivery.statusName }}
+        </p>
+      </div>
+      <span class="model-span"> 결제 총액 </span>
+      <p>{{ lib.getNumberFormatted(state.model.amount) }} 원</p>
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>상품명</th>
+            <th>원가</th>
+            <th>구매 수</th>
+            <th>총액</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(items, idx) in state.model.orderItemList" :key="idx">
+            <td>
+              <a>{{ items.itemName }}</a>
+            </td>
+            <td>{{ lib.getNumberFormatted(items.itemPrice) }} 원</td>
+            <td>{{ items.count }}</td>
+            <td>{{ lib.getNumberFormatted(items.amount) }} 원</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <button @click="state.modelStatus = false">닫기</button>
+    </div>
+  </div>
+
   <div class="home">
     <section class="py-5 text-center container">
       <div class="row py-lg-5">
@@ -11,6 +56,12 @@
       <div class="row mt-4">
         <AccountSidebar />
         <div class="table-container mt-4 p-3">
+          <Pagenation
+            :pages="state.pages"
+            :number="state.number"
+            :pathInfo="pathInfo"
+          />
+
           <table class="table table-striped table-hover">
             <thead class="thead-dark">
               <tr>
@@ -27,9 +78,10 @@
                 </td>
                 <td>{{ order.payment }}</td>
                 <td>{{ lib.getNumberFormatted(order.amount) }} 원</td>
-                <!-- <td>{{ item.orderItemList }}</td> -->
                 <td>
-                  <button class="btn btn-primary">상세보기</button>
+                  <button class="btn btn-primary" @click="setOrder(order.id)">
+                    상세보기
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -50,27 +102,54 @@ import { reactive } from "vue";
 import axios from "axios";
 import AccountSidebar from "@/components/account/AccountSidebar";
 import lib from "@/scripts/lib";
+import Pagenation from "@/components/Pagenation";
+import { useRoute } from "vue-router";
 
 export default {
   name: "Orders",
   components: {
     AccountSidebar,
+    Pagenation
+
   },
   setup() {
+    const route = useRoute();
+
+    const pathInfo = {
+      pathName: "Orders",
+    };
     const state = reactive({
       form: {
+        modelStatus: false,
         orders: [],
+        model: {},
+        modelDelivery: {},
+        number: 1,
+        pages: [],
       },
     });
 
     const load = () => {
-      axios.get(`/api/orders`).then((res) => {
+      axios.get(`/api/orders`,{params:{page: route.query.page,}}).then((res) => {
         state.form.orders = res.data;
+        state.number = res.data.number + 1;
+        state.pages = lib.getTotalPages(res.data.totalPages);
       });
+      state.model = {};
+      state.modelDelivery = {};
     };
 
     load();
-    return { state, lib };
+    const setOrder = (id) => {
+      axios.get(`/api/orders/${id}`).then(({ data }) => {
+        state.model = data;
+        state.modelDelivery = data.delivery;
+        
+      });
+      state.modelStatus = true;
+    };
+
+    return { state, lib, setOrder ,pathInfo};
   },
 };
 </script>
@@ -118,6 +197,24 @@ export default {
   background-color: #343a40;
   color: white;
   text-align: center;
+}
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+  z-index: 9999;
+  box-sizing: border-box;
+}
+.white-bg {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+.model-span {
+  font-weight: bold;
 }
 </style>
         

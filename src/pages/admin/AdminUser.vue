@@ -3,11 +3,25 @@
     <div class="white-bg">
       <h4>{{ state.model.nickname }}</h4>
       <p>
-        {{ state.model.role }}
-      </p>
-      <p>
         {{ state.model.email }}
       </p>
+      <hr />
+      <div class="form-group">
+        <label for="role" class="form-label">권한</label
+        >
+        <select v-model="state.model.role" class="form-select">
+          <option
+            v-for="(item, index) in state.roleList"
+            :key="index"
+            :value="item.name"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+        <button class="btn btn-primary" @click="changeRole(state.model.id)">
+          권한 수정
+        </button>
+      </div>
       <button @click="state.modelStatus = false">닫기</button>
     </div>
   </div>
@@ -23,11 +37,15 @@
         <AdminSidebar />
         <div class="table-container mt-4 p-3">
           <form>
+            
+            <Pagenation :pages = "state.pages" :number = "state.number" :pathInfo = pathInfo />
+
+            
             <div class="d-flex">
               <div class="input-group">
                 <input
                   class="form-control"
-                  name="title"
+                  name="nickname"
                   placeholder="닉네임 검색"
                 />
                 <button class="btn btn-primary lh-1 p-0 px-2">
@@ -36,11 +54,21 @@
               </div>
 
               <div class="input-group">
-                <input
+                <!-- <input
                   class="form-control"
-                  name="title"
+                  name="role"
                   placeholder="코드명 검색"
-                />
+                /> -->
+                <select class="form-select" name="role">
+                  <option value="" selected disabled>코드 검색</option>
+                  <option
+                    v-for="(item, index) in state.roleList"
+                    :key="index"
+                    :value="item.name"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
                 <button class="btn btn-primary lh-1 p-0 px-2">
                   <span class="material-symbols-outlined"> search </span>
                 </button>
@@ -65,7 +93,7 @@
                 <td>{{ users.email }}</td>
                 <td>
                   <button class="btn btn-primary" @click="setUser(users.id)">
-                    상세보기
+                    권한 수정
                   </button>
                 </td>
               </tr>
@@ -86,33 +114,74 @@
 import { reactive } from "vue";
 import axios from "axios";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import router from "@/scripts/router";
+import { useRoute } from "vue-router";
+import lib from "@/scripts/lib";
+import Pagenation from "@/components/Pagenation";
 
 export default {
   name: "AdminUser",
   components: {
     AdminSidebar,
+    Pagenation
   },
   setup() {
+    const route = useRoute();
+    const pathInfo = {
+      pathName: "AdminUser",
+    };
     const state = reactive({
       form: {
         modelStatus: false,
         model: {},
         userList: [],
+        number: 1,
+        pages: [],
+        role: "",
       },
+      roleList: [],
     });
     const load = () => {
-      axios.get("/api/admin/users").then(({ data }) => {
-        state.userList = data.content;
+      axios
+        .get("/api/admin/users", {
+          params: {
+            nickname: route.query.nickname,
+            role: route.query.role,
+            page: route.query.page,
+          },
+        })
+        .then(({ data }) => {
+          state.userList = data.content;
+          state.number = data.number + 1;
+          state.pages = lib.getTotalPages(data.totalPages);
+        });
+      state.model = {};
+      
+      axios.get(`/api/admin/role`).then((res) => {
+        state.roleList = res.data;
       });
     };
+    load();
+
     const setUser = (id) => {
-      axios.get(`/api/users/${id}`).then(({ data }) => {
+      axios.get(`/api/admin/users/${id}`).then(({ data }) => {
         state.model = data;
       });
       state.modelStatus = true;
     };
-    load();
-    return { state, setUser };
+
+    const changeRole = (id) => {
+      const dto = {
+        roleName: state.model.role,
+      };
+      axios.put(`/api/admin/users/${id}`, dto).then(({ data }) => {
+        console.log(data);
+        state.modelStatus = false;
+        window.alert("권한을 수정했습니다.");
+        router.push({ path: "/murthehelp/admin/users" });
+      });
+    };
+    return { state, setUser, changeRole ,pathInfo};
   },
 };
 </script>

@@ -24,7 +24,6 @@
     
 <script>
 import { reactive } from 'vue';
-// import axios from 'axios';
 import Card from "@/components/item/Card";
 import CategoryNavVue from "@/components/item/CategoryNav";
 import CategorySidebar from "@/components/item/CategorySidebar";
@@ -42,15 +41,6 @@ export default {
             firstCategory:[],
             secondCategory:[]
         })
-        // axios.get(`/api/first_categories/${this.code}`).then((res) => {
-        //   state.firstCategory = res.data;
-        // }),
-        // axios.get(`/api/second_categories/${this.categoryId}`).then((res) => {
-        //   state.secondCategory = res.data;
-        // })
-        // axios.get("/api/items/list/1").then((res) => {
-        //     state.items = res.data;
-        // })
         return {state}
     }
 };

@@ -142,7 +142,7 @@ export default {
         totalPrice: 0,
         address : "",
         payment : "",
-
+        statusId : 1,
       },
     });
 
@@ -159,8 +159,9 @@ export default {
       }
       axios.put(`/api/carts/${id}`,dto).then((res) => {
         console.log(res.data)
+        window.alert("장바구니 수량이 수정되었습니다.");
       });
-      router.push({path:'/cart'});
+      router.push({path:'/murthehelp/cart'});
     };
     
     //주문 생성 메서드
@@ -169,12 +170,12 @@ export default {
         cartId : state.form.carts.map(c => c.id),
         address : state.form.address,
         payment : state.form.payment,
-        statusId : 1
+        statusId : state.form.statusId,
       }
       axios.post(`/api/orders`,dto).then((res) => {
         console.log(res.data)
       });
-      router.push({path:'/orders'});
+      router.push({path:'/murthehelp/orders'});
     };
     
 
@@ -208,8 +209,8 @@ export default {
       axios.delete(`/api/carts/${id}`).then((res)=>{
         console.log(res.data);
         window.alert("장바구니에서 삭제되었습니다.");
-        router.push({path:'/cart'});
       })
+      router.push({path:'/murthehelp/cart'});
     }
 
     return { state, lib, totalPrice, totalDiscount, totalResult ,updateCount,createOrder,remove};

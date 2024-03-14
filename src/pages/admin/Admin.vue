@@ -24,6 +24,7 @@
       <script>
 import { reactive } from "vue";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import axios from "axios";
 
 export default {
   name: "Admin",
@@ -32,8 +33,14 @@ export default {
   },
   setup() {
     const state = reactive({
-      form: {},
+      form: { users: [] },
     });
+    const load = () => {
+      axios.get("/api/admin/users").then((data) => {
+        state.users = data.content;
+      });
+    };
+    load();
     return { state };
   },
 };

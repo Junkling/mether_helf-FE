@@ -57,13 +57,13 @@ export default {
         })
         const submit = () =>{
             if(state.form.confirmPassword!=state.form.password){    
-                router.push({path: '/signup'})
+                router.push({path: '/murthehelp/signup'})
                 window.alert("비밀번호 확인이 틀렸습니다..");
                 return
             }
 
             axios.post("/api/users/signup", state.form).then(()=>{
-                router.push({path: '/'})
+                router.push({path: '/murthehelp'})
                 window.alert("회원 가입되었습니다.");
             }).catch(error=>{
                 console.log(error)

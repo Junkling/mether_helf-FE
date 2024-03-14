@@ -37,10 +37,11 @@
             class="form-control"
             id="content"
             placeholder="내용을 입력하세요"
+            v-model="content"
           ></textarea>
         </div>
         <hr class="my-4" />
-        <button class="w-100 btn btn-primary btn-lg" @click="Edit">
+        <button class="w-100 btn btn-primary btn-lg" @click="edit">
           수정하기
         </button>
       </form>
@@ -61,27 +62,34 @@ export default {
       price: 0,
       discountPer: 0,
       stock: 0,
-      content : ""
+      content: "",
     };
   },
   mounted() {
-    axios.get(`/api/items/${this.id}`).then((res) => {
-      (this.name = res.data.name),
-        (this.price = res.data.price),
-        (this.discountPer = res.data.discountPer),
-        (this.stock = res.data.stock),
-        (this.sellCount = res.data.sellCount);
-        (this.content = res.data.content);
+    axios.get(`/api/admin/items/${this.id}`).then((res) => {
+      this.name = res.data.name;
+      this.price = res.data.price;
+      this.discountPer = res.data.discountPer;
+      this.stock = res.data.stock;
+      this.sellCount = res.data.sellCount;
+      this.content = res.data.content;
     });
   },
   setup() {},
   methods: {
     edit() {
-      axios.put(`/api/items/${this.id}`).then((res) => {
+      const dto = {
+        name: this.name,
+        price: this.price,
+        discountPer: this.discountPer,
+        stock: this.stock,
+        content: this.content,
+      };
+      axios.put(`/api/admin/items/${this.id}`, dto).then((res) => {
         alert("수정 완료되었습니다.");
         console.log(res.data);
-        router.push({ path: "/admin/items" });
       });
+      router.push({ path: "/murthehelp/admin/items" });
     },
   },
 };

@@ -11,16 +11,16 @@
 
 
       <li class="nav-item">
-        <router-link to="/admin/users" class="text-black"> 유저 관리 </router-link>
+        <router-link to="/murthehelp/admin/users" class="text-black"> 유저 관리 </router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/admin/items" class="text-black"> 상품 관리 </router-link>
+        <router-link to="/murthehelp/admin/items" class="text-black"> 상품 관리 </router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/admin/first_categories" class="text-black"> 대 카테고리 관리 </router-link>
+        <router-link to="/murthehelp/admin/first_categories" class="text-black"> 대 카테고리 관리 </router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/admin/second_categories" class="text-black"> 중 카테고리 관리 </router-link>
+        <router-link to="/murthehelp/admin/second_categories" class="text-black"> 중 카테고리 관리 </router-link>
       </li>
     </ul>
     <hr>

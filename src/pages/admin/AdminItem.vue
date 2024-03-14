@@ -7,9 +7,9 @@
       <div class="button-right">
         <button
           class="btn btn-primary"
-          onclick="location.href = '/admin/items/add'"
+          onclick="location.href = '/murthehelp/admin/items/add'"
         >
-          <a class="nav-link link-dark"> 생성 </a>
+          <span class="material-symbols-outlined"> 생성 </span>
         </button>
       </div>
     </section>
@@ -19,11 +19,17 @@
         <AdminSidebar />
         <div class="table-container mt-4 p-3">
           <form>
+            <Pagenation
+              :pages="state.pages"
+              :number="state.number"
+              :pathInfo="pathInfo"
+            />
+
             <div class="d-flex">
               <div class="input-group">
                 <input
                   class="form-control"
-                  name="itemName"
+                  name="name"
                   placeholder="상품명 검색"
                 />
                 <button class="btn btn-primary lh-1 p-0 px-2">
@@ -32,18 +38,22 @@
               </div>
 
               <div class="input-group">
-                <input
-                  class="form-control"
-                  name="secondCategoryId"
-                  placeholder="중 카테고리로 검색"
-                />
+                <select placeholder="" class="form-select" name="secondCategoryId">
+                  <option value="" selected disabled>중 카테고리 검색</option>
+                  <option
+                    v-for="(item, index) in state.secondCategoryList"
+                    :key="index"
+                    :value="item.id"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
                 <button class="btn btn-primary lh-1 p-0 px-2">
                   <span class="material-symbols-outlined"> search </span>
                 </button>
               </div>
             </div>
           </form>
-
           <table class="table table-striped table-hover">
             <thead class="thead-dark">
               <tr>
@@ -83,34 +93,62 @@
 import { reactive } from "vue";
 import axios from "axios";
 import AdminSidebar from "@/components/admin/AdminSidebar";
-import router from "@/scripts/router";
+// import router from "@/scripts/router";
+import { useRouter, useRoute } from "vue-router";
+import lib from "@/scripts/lib";
+import Pagenation from "@/components/Pagenation";
 
 export default {
   name: "AdminItem",
   components: {
     AdminSidebar,
+    Pagenation,
   },
   setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const pathInfo = {
+      pathName: "AdminItem",
+    };
     const state = reactive({
       form: {
         modelStatus: false,
         model: {},
         itemList: [],
+        secondCategoryId: 0,
+        name: "",
+        number: 1,
+        pages: [],
       },
+      secondCategoryList :[]
     });
     const load = () => {
-      axios.get("/api/items/admin/list/2").then(({ data }) => {
-        state.itemList = data;
-      });
+      axios
+        .get("/api/admin/items", {
+          params: {
+            secondCategoryId: route.query.secondCategoryId,
+            name: route.query.name,
+            page: route.query.page,
+            // ...route.query
+          },
+        })
+        .then(({ data }) => {
+          state.itemList = data.content;
+          state.number = data.number + 1;
+          state.pages = lib.getTotalPages(data.totalPages);
+        });
+        axios.get(`/api/second-categories/list`).then((res) => {
+          state.secondCategoryList = res.data;
+        });
     };
     const showDetail = (id) => {
-      router.push({ path: `/admin/item/${id}` });
+      router.push({ path: `/murthehelp/admin/item/${id}` });
     };
     const toCreate = () => {
-      router.push({ path: `/admin/item/add` });
+      router.push({ path: `/murthehelp/admin/item/add` });
     };
     load();
-    return { state, showDetail, toCreate };
+    return { state, showDetail, toCreate, pathInfo };
   },
 };
 </script>

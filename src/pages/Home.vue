@@ -20,7 +20,7 @@
         </small>
         <hr />
         <p class="card-text">
-          <span>{{ state.model.content }} &nbsp;</span>
+          <span>{{ state.model.content }} </span>
         </p>
         <hr />
         <div class="form-group">
@@ -29,9 +29,9 @@
             type="text"
             class="form-control"
             id="cartCount"
-            v-model="state.form.cartCount"
+            v-model="cartCount"
           />
-          <button class="btn btn-primary" @click="addToCart(state.model.id)">
+          <button class="btn btn-primary" @click="addToCart(state.model.id , cartCount)">
             장바구니 담기
           </button>
         </div>
@@ -49,7 +49,7 @@
       <!-- <CategoryNavVue :firstCategory = "firstCategory"/> -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">대카테고리</a>
+          <a class="navbar-brand" href="#"> {{ $route.params.role }}</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -128,13 +128,20 @@ import { reactive } from "vue";
 import axios from "axios";
 import Card from "@/components/item/Card";
 import lib from "@/scripts/lib";
+import { useRoute } from "vue-router";
 
 export default {
   name: "Home",
   components: {
     Card,
   },
+  data(){
+    return {
+      cartCount: 1,
+    }
+  },
   setup() {
+    const route = useRoute();
     const state = reactive({
       form: {
         modelStatus: false,
@@ -143,28 +150,36 @@ export default {
         firstCategoies: [],
         firstCategoryName: "",
         secondCategories: [],
-        cartCount: 0,
       },
     });
     const load = () => {
-      axios.get("/api/first_categories/list/RED").then(({ data }) => {
-        state.firstCategories = data;
-        changeFirstCategory(data[0]);
-      });
+      axios
+        .get(`/api/first-categories`, {
+          params: {
+            role: route.params.role,
+          },
+        })
+        .then(({ data }) => {
+          state.firstCategories = data;
+          console.log(state.firstCategoies);
+          changeFirstCategory(data[0]);
+        });
       state.model = {};
     };
+
     const changeFirstCategory = (category) => {
       state.firstCategoryName = category.name;
       axios
-        .get(`/api/second_categories/list/${category.id}`)
+        .get(`/api/second-categories/list`, {params : {firstCategoryId:category.id}})
         .then(({ data }) => {
           state.secondCategories = data;
         });
       state.items = [];
     };
 
+    load();
     const findItems = (id) => {
-      axios.get(`/api/items/list/${id}`).then(({ data }) => {
+      axios.get(`/api/items/list`, {params : {secondCategoryId:id}}).then(({ data }) => {
         state.items = data;
       });
     };
@@ -174,20 +189,18 @@ export default {
       });
       state.modelStatus = true;
     };
-    const addToCart = (itemId) => {
+    const addToCart = (itemId, cartCount) => {
       const dto = {
-        //여기 시큐리티 적용 후 삭제해야함 수정해야함
         itemId: itemId,
-        count: state.form.cartCount
+        count: cartCount,
       };
       axios.post(`/api/carts`, dto).then(({ data }) => {
         console.log(data);
         state.modelStatus = false;
         window.alert("장바구니에 담았습니다.");
       });
-      state.modelStatus = true;
+      state.modelStatus = false;
     };
-    load();
     return { state, changeFirstCategory, findItems, setModel, lib, addToCart };
   },
 };
@@ -202,28 +215,6 @@ export default {
   flex: 0 1 auto;
   text-align: center;
 }
-/* .d-flex {
-  display: flex;
-  flex-wrap: wrap;
-  right: 0%;
-} */
-
-/* .card-container {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.card-container .col {
-  flex: 0 0 33.3333%;
-  max-width: 33.3333%;
-}
-
-.category-sidebar {
-  flex: 0 0 25%;
-  max-width: 25%;
-} */
 .nav-link {
   display: inline-block;
   margin-right: 15px;
@@ -247,7 +238,4 @@ export default {
   border-radius: 8px;
   padding: 20px;
 }
-/* .album {
-  display: flex;
-} */
 </style>

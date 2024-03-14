@@ -50,11 +50,6 @@
         </div>
       </div>
     </div>
-    <div class="col-12 mt-4">
-      <ul class="mt-2">
-        <li>[내정보] 어쩌고 저쩌고.</li>
-      </ul>
-    </div>
   </div>
 </template>
   <script>
@@ -87,7 +82,7 @@ export default {
       const dto = { nickname: state.form.nickname };
       axios.put(`/api/users`, dto).then((res) => {
         console.log(res.data)
-        router.push({ path: "/my" });
+        router.push({ path: "/murthehelp/my" });
         alert("수정 완료되었습니다.");
       });
     };

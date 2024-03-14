@@ -6,6 +6,7 @@ import store from "@/scripts/store";
 
 axios.interceptors.request.use((config) => {
   config.headers["authorization"] = "Bearer " + sessionStorage.getItem("token");
+  // config.headers["authorization"] = "Bearer " + store.state.user.token
   return config;
 })
 
@@ -24,7 +25,7 @@ axios.interceptors.response.use(
           // 이행되지 않는 Promise를 반환하여 Promise Chaining 끊어주기
           return new Promise(() => {});
           case 403:
-          router.push('/').catch(() => {});
+          router.push('/murthehelp').catch(() => {});
           window.alert("잘못된 접근입니다.")
           // 이행되지 않는 Promise를 반환하여 Promise Chaining 끊어주기
           return new Promise(() => {});

@@ -16,16 +16,16 @@
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item"></li>
       <li class="nav-item">
-        <router-link to="/my" class="text-black"> 내 정보</router-link>
+        <router-link to="/murthehelp/my" class="text-black"> 내 정보</router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/cart" class="text-black"> 장바구니</router-link>
+        <router-link to="/murthehelp/cart" class="text-black"> 장바구니</router-link>
         <!-- <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
           장바구니
         </a> -->
       </li>
       <li class="nav-item">
-        <router-link to="/orders" class="text-black"> 주문 목록</router-link>
+        <router-link to="/murthehelp/orders" class="text-black"> 주문 목록</router-link>
       </li>
     </ul>
     <hr />

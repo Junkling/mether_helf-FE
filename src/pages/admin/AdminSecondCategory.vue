@@ -2,19 +2,33 @@
   <div class="home">
     <section class="py-5 text-center container">
       <header class="header text-center">
-        <h1>카테고리 목록</h1>
+        <h1>중 카테고리 목록</h1>
       </header>
+      <div class="button-right">
+        <button
+          class="btn btn-primary"
+          onclick="location.href = '/murthehelp/admin/second_categories/add'"
+        >
+          <span class="material-symbols-outlined"> 생성 </span>
+        </button>
+      </div>
     </section>
     <div class="container my-4">
       <div class="row mt-4">
         <AdminSidebar />
         <div class="table-container mt-4 p-3">
           <form>
+            <Pagenation
+              :pages="state.pages"
+              :number="state.number"
+              :pathInfo="pathInfo"
+            />
+
             <div class="d-flex">
               <div class="input-group">
                 <input
                   class="form-control"
-                  name="title"
+                  name="name"
                   placeholder="이름 검색"
                 />
                 <button class="btn btn-primary lh-1 p-0 px-2">
@@ -23,18 +37,20 @@
               </div>
 
               <div class="input-group">
-                <input
-                  class="form-control"
-                  name="title"
-                  placeholder="상위 카테고리로 검색"
-                />
+                <select
+                class="form-select" name="firstCategoryId"
+                >
+                  <option value="" selected disabled>상위 카테고리명</option>
+                  <option
+                    v-for="(item, index) in state.firstCategoryList"
+                    :key="index"
+                    :value="item.id"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
                 <button class="btn btn-primary lh-1 p-0 px-2">
                   <span class="material-symbols-outlined"> search </span>
-                </button>
-              </div>
-              <div class="input-group">
-                <button class="btn btn-primary">
-                  <span class="material-symbols-outlined"> 생성 </span>
                 </button>
               </div>
             </div>
@@ -42,15 +58,15 @@
           <table class="table table-striped table-hover">
             <thead class="thead-dark">
               <tr>
-                <!-- <th>대 카테고리 명</th> -->
+                <th>대 카테고리 명</th>
                 <th>카테고리 명</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, idx) in state.itemList" :key="idx">
-                <!-- <td>
-                    <a>{{ item.firstCategory.name }}</a>
-                  </td> -->
+                <td>
+                  <a>{{ item.firstCategory.name }}</a>
+                </td>
                 <td>{{ item.name }}</td>
                 <td>
                   <button class="btn btn-primary" @click="showDetail(item.id)">
@@ -76,28 +92,55 @@ import { reactive } from "vue";
 import axios from "axios";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import router from "@/scripts/router";
+import { useRoute } from "vue-router";
+import Pagenation from "@/components/Pagenation";
+import lib from "@/scripts/lib";
 
 export default {
-  name: "AdminFirstCategory",
+  name: "AdminSecondCategory",
   components: {
     AdminSidebar,
+    Pagenation,
   },
   setup() {
+    const route = useRoute();
+    const pathInfo = {
+      pathName: "AdminSecondCategory",
+    };
     const state = reactive({
       form: {
-        itemList: [],
+        itemList: {},
+        firstCategoryId: 0,
+        name: "",
+        number: 1,
+        pages: [],
       },
+      firstCategoryList: [],
     });
+
     const load = () => {
-      axios.get(`/api/second_categories/list/1`).then(({ data }) => {
-        state.itemList = data;
+      axios
+        .get("/api/admin/second-categories", {
+          params: {
+            firstCategoryId: route.query.firstCategoryId,
+            name: route.query.name,
+            page: route.query.page,
+          },
+        })
+        .then(({ data }) => {
+          state.itemList = data.content;
+          state.number = data.number + 1;
+          state.pages = lib.getTotalPages(data.totalPages);
+        });
+      axios.get(`/api/first-categories`).then((res) => {
+        state.firstCategoryList = res.data;
       });
     };
     const showDetail = (id) => {
-      router.push({ path: `/admin/second_category/${id}` });
+      router.push({ path: `/murthehelp/admin/second_category/${id}` });
     };
     load();
-    return { state, showDetail };
+    return { state, showDetail, pathInfo };
   },
 };
 </script>
@@ -165,6 +208,9 @@ export default {
   background: white;
   border-radius: 8px;
   padding: 20px;
+}
+.button-right {
+  float: right;
 }
 </style>
             
