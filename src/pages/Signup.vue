@@ -3,6 +3,7 @@
         <div class="form-sign-up w-100 m-auto">
 		<h2>회원 가입</h2>
 		<p>생성할 계정 정보를 입력해주세요</p>
+        <p style="color: red"> 관리자에게 권한 부여 받은 후 접근 가능</p>
 		<hr>
         <div class="form-group">
             <input type="username" class="form-control" id="floatingInput" placeholder="로그인 ID *" @keyup.enter="submit()" v-model="state.form.username">

@@ -7,11 +7,13 @@
       <form>
         <div class="form-group">
           <label for="firstCategoryId" class="form-label"
-            >상위 카테고리 ID</label
+            >상위 카테고리</label
           >
           <!-- <input type="text" class="form-control" id="firstCategoryId" v-model="firstCategoryId" /> -->
           <select v-model="state.form.firstCategoryId" class="form-select">
-            <option value="" selected disabled>현재 값 : {{ firstCategoryName }}</option>
+            <option value="" selected disabled>
+              현재 값 : {{ firstCategoryName }}
+            </option>
             <option
               v-for="(item, index) in state.firstCategoryList"
               :key="index"
@@ -24,11 +26,37 @@
 
         <div class="form-group">
           <label for="name" class="form-label">카테고리명</label>
-          <input type="text" class="form-control" id="name" v-model="state.name" />
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            v-model="state.name"
+          />
         </div>
         <hr class="my-4" />
-        <button class="w-100 btn btn-primary btn-lg" @click="edit">
-          수정하기
+        <div class="row">
+          <div class="col">
+            <button class="w-100 btn btn-primary btn-lg" @click="edit">
+              수정하기
+            </button>
+          </div>
+
+          <div class="col">
+            <button
+              class="w-100 btn btn-secondary btn-lg"
+              onclick="location.href = '/murthehelp/admin/second_categories'"
+              type="button"
+            >
+              취소
+            </button>
+          </div>
+        </div>
+        <button
+          class="w-100 btn btn-danger btn-lg"
+          @click="remove()"
+          type="button"
+        >
+          삭제하기
         </button>
       </form>
     </div>
@@ -84,6 +112,13 @@ export default {
       };
       axios.put(`/api/admin/second-categories/${this.id}`, dto).then((res) => {
         alert("수정 완료되었습니다.");
+        console.log(res.data);
+      });
+      router.push({ path: "/murthehelp/admin/second_categories" });
+    },
+    remove() {
+      axios.delete(`/api/admin/second-categories/${this.id}`).then((res) => {
+        window.alert("삭제 완료되었습니다.");
         console.log(res.data);
       });
       router.push({ path: "/murthehelp/admin/second_categories" });

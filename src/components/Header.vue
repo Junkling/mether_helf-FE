@@ -17,7 +17,8 @@
                   to="/murthehelp/account"
                   class="text-white"
                   v-if="$store.state.user.isSigned"
-                >
+                  >
+                  <!-- v-if="isSigned" -->
                   마이 페이지</router-link
                 >
               </li>
@@ -26,7 +27,8 @@
                   to="/murthehelp/admin"
                   class="text-white"
                   v-if="$store.state.user.isAdmin"
-                >
+                  >
+                  <!-- v-if="isAdmin" -->
                   관리자 페이지</router-link
                 >
               </li>
@@ -40,15 +42,16 @@
                   to="/murthehelp/login"
                   class="text-white"
                   v-if="!$store.state.user.isSigned"
-                >
+                  >
+                  <!-- v-if="!isSigned" -->
                   로그인</router-link
                 >
-                <a
+                <router-link
                   to="/murthehelp/login"
                   class="text-white"
                   @click="logout()"
                   v-else
-                  >로그아웃</a
+                  >로그아웃</router-link
                 >
               </li>
               <!-- <li v-if="!$store.state.account.id"> -->
@@ -57,7 +60,8 @@
                   to="/murthehelp/signup"
                   class="text-white"
                   v-if="!$store.state.user.isSigned"
-                >
+                  >
+                  <!-- v-if="!isSigned" -->
                   회원가입</router-link
                 >
               </li>
@@ -99,16 +103,21 @@
 </template>
   
   <script>
-import router from "@/scripts/router";
 import store from "@/scripts/store";
 export default {
   name: "Header",
+  data(){
+    return{
+      isSigned : localStorage.getItem("isSigned") ?? false,
+      isAdmin : localStorage.getItem("isAdmin") ?? false
+    }
+  },
   setup() {
     const logout = () => {
       // axios.post("api/users/logout").then(()=>{
       store.commit("logout");
       // sessionStorage.removeItem("token");
-      router.push({ path: "/murthehelp/login" });
+      // router.push({ path: "/murthehelp/login" });
       // });
     };
     return { logout };

@@ -34,10 +34,12 @@
       <h2>MurtheHelp에 오신걸 환영합니다.</h2>
       <br />
       <br />
-      <h3 style="color: red">
+      <br />
+      <h4>
         해당 페이지는 킬러들을 위한 쇼핑몰 입니다. 코드가 부여된 회원만 접근
         가능합니다.
-      </h3>
+      </h4>
+      <h4 style="color: red">(권한 부여 필수)</h4>
       <br />
       <br />
       <br />
@@ -49,7 +51,7 @@
           <!-- </button> -->
         </a>
 
-        <a class="btn btn-outline-info" href="/murthehelp/signup" role="button">회원 가입</a>
+        <a class="btn btn-outline-info" href="/murthehelp/signup" role="button">회원 가입 (권한 부여 후 사용 가능)</a>
 
         <!-- <button type="button" class="btn btn-outline-info">
           <router-link class="text-black" to="/murthehelp/signup">

@@ -24,8 +24,28 @@
           <input type="text" class="form-control" id="name" v-model="name" />
         </div>
         <hr class="my-4" />
-        <button class="w-100 btn btn-primary btn-lg" @click="edit">
-          수정하기
+        <div class="row">
+          <div class="col">
+            <button class="w-100 btn btn-primary btn-lg" @click="edit">
+              수정하기
+            </button>
+          </div>
+          <div class="col">
+            <button
+              class="w-100 btn btn-secondary btn-lg"
+              onclick="location.href = '/murthehelp/admin/first_categories'"
+              type="button"
+            >
+              취소
+            </button>
+          </div>
+        </div>
+        <button
+          class="w-100 btn btn-danger btn-lg"
+          @click="remove()"
+          type="button"
+        >
+          삭제하기
         </button>
       </form>
     </div>
@@ -77,6 +97,13 @@ export default {
       axios.put(`/api/admin/first-categories/${this.id}`, dto).then((res) => {
         console.log(res.data);
         window.alert("수정 완료되었습니다.");
+      });
+      router.push({ path: "/murthehelp/admin/first_categories" });
+    },
+    remove() {
+      axios.delete(`/api/admin/first-categories/${this.id}`).then((res) => {
+        window.alert("삭제 완료되었습니다.");
+        console.log(res.data);
       });
       router.push({ path: "/murthehelp/admin/first_categories" });
     },

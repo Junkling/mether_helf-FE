@@ -41,8 +41,29 @@
           ></textarea>
         </div>
         <hr class="my-4" />
-        <button class="w-100 btn btn-primary btn-lg" @click="edit">
-          수정하기
+        <div class="row">
+          <div class="col">
+            <button class="w-100 btn btn-primary btn-lg" @click="edit">
+              수정하기
+            </button>
+          </div>
+
+          <div class="col">
+            <button
+              class="w-100 btn btn-secondary btn-lg"
+              onclick="location.href = '/murthehelp/admin/items'"
+              type="button"
+            >
+              취소
+            </button>
+          </div>
+        </div>
+        <button
+          class="w-100 btn btn-danger btn-lg"
+          @click="remove()"
+          type="button"
+        >
+          삭제하기
         </button>
       </form>
     </div>
@@ -86,7 +107,14 @@ export default {
         content: this.content,
       };
       axios.put(`/api/admin/items/${this.id}`, dto).then((res) => {
-        alert("수정 완료되었습니다.");
+        window.alert("수정 완료되었습니다.");
+        console.log(res.data);
+      });
+      router.push({ path: "/murthehelp/admin/items" });
+    },
+    remove() {
+      axios.delete(`/api/admin/items/${this.id}`).then((res) => {
+        window.alert("삭제 완료되었습니다.");
         console.log(res.data);
       });
       router.push({ path: "/murthehelp/admin/items" });

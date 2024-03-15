@@ -58,9 +58,7 @@
       <div class="col-12">
         <div class="d-flex align-items-center mb-3">
           <div class="form-check">
-            <input disabled type="checkbox" class="form-check-input" />
-            <div class="form-check-label">전체선택 (0/0)</div>
-            <span class="ms-auto">선택삭제</span>
+            <button class="btn btn-danger" @click="removeAll">전체 삭제</button>
           </div>
         </div>
         <div class="d-flex justify-content-between mb-3">
@@ -211,9 +209,17 @@ export default {
         window.alert("장바구니에서 삭제되었습니다.");
       })
       router.push({path:'/murthehelp/cart'});
+    };
+    const removeAll =()=>{
+      axios.delete(`/api/carts`).then((res)=>{
+        console.log(res.data);
+        window.alert("장바구니가 전체 삭제되었습니다.");
+      })
+      router.push({path:'/murthehelp/cart'});
     }
 
-    return { state, lib, totalPrice, totalDiscount, totalResult ,updateCount,createOrder,remove};
+    
+    return { state, lib, totalPrice, totalDiscount, totalResult ,updateCount,createOrder,remove,removeAll};
   },
 };
 </script>
