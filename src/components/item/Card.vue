@@ -7,8 +7,8 @@
           <span class="discount badge bg-danger">{{item.discountPer}}%</span>
         </p>
         <div class="d-flex justify-content-between align-items-center">
-            <button class="btn btn-primary" @click="addTOCart(item.id)">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <button class="btn btn-light">
+              <i class="fa fa-genderless" aria-hidden="true"></i>
             </button>
           <small class="price text-muted">{{lib.getNumberFormatted(item.price)}}원</small>
           <small class="real text-danger">{{lib.getNumberFormatted(item.price-Math.ceil((item.price * item.discountPer/100)))}}원</small>
@@ -17,23 +17,17 @@
     </div>
 </template>
 <script>
-// import lib from "@/scripts/lib"
-// import axios from 'axios';
+import lib from "@/scripts/lib"
 
 export default {
   name: 'Card',
-//   props:{
-//     item: Object
-//   },
-//   setup(){
-//     const addTOCart = (itemId)=>{
-//       axios.post(`/api/cart/items/${itemId}`).then((res)=>{
-//         console.log(res.data)
-//       }
-//       )
-//     };
-//     return{lib, addTOCart}
-//   }
+  props:{
+    item: Object
+  },
+  setup(){
+    
+    return{lib}
+  }
 }
 </script>
 

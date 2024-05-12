@@ -1,17 +1,17 @@
 <template>
-  <Header/>
-  <RouterView />
-  <Footer/>
+  <Header />
+  <RouterView :key="$route.fullPath" />
+  <Footer />
 </template>
 
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { RouterView } from "vue-router";
+import { RouterView} from "vue-router";
 // import store from "@/scripts/store";
-// import axios from 'axios';
-// import { useRoute } from 'vue-router';
-// import { watch } from 'vue';
+// import { watch } from "vue";
+// import axios from "axios";
+
 
 export default {
   name: "App",
@@ -20,7 +20,18 @@ export default {
     Footer,
     RouterView,
   },
-  setup() {},
+  // setup() {
+  //   const check = () => {
+  //     axios.get("/api/users/check").then(({ data }) => {
+  //       console.log(data);
+  //       store.commit("setUser", data);
+  //     });
+  //   };
+  //   const route = useRoute();
+  //   watch(route, () => {
+  //     check();
+  //   });
+  // },
 };
 </script>
 
