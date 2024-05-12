@@ -22,7 +22,7 @@ axios.interceptors.response.use(
         // status code가 401인 경우 `logout`을 커밋하고 `/login` 페이지로 리다이렉트
         case 401:
           store.commit('logout');
-          router.push('/login').catch(() => { });
+          router.push('/murthehelp/login').catch(() => { });
           window.alert("로그인 후 이용 가능합니다.")
           // 이행되지 않는 Promise를 반환하여 Promise Chaining 끊어주기
           return new Promise(() => { });

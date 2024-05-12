@@ -46,13 +46,7 @@
                   <!-- v-if="!isSigned" -->
                   로그인</router-link
                 >
-                <router-link
-                  to="/murthehelp/login"
-                  class="text-white"
-                  @click="logout()"
-                  v-else
-                  >로그아웃</router-link
-                >
+                
               </li>
               <!-- <li v-if="!$store.state.account.id"> -->
               <li>
@@ -63,6 +57,15 @@
                   >
                   <!-- v-if="!isSigned" -->
                   회원가입</router-link
+                >
+              </li>
+              <br>
+              <li>
+                <router-link
+                  to="/murthehelp/login"
+                  class="text-white"
+                  @click="logout()"
+                  >로그아웃</router-link
                 >
               </li>
             </ul>
@@ -82,9 +85,6 @@
           class="navbar-brand d-flex align-items-center"
         >
           <strong>MurtheHelp</strong>
-        </router-link>
-        <router-link to="/murthehelp/cart" class="cart btn">
-          <i class="fa fa-shopping-cart"></i>
         </router-link>
         <button
           class="navbar-toggler"
